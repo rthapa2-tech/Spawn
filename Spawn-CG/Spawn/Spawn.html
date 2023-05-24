@@ -1,0 +1,91 @@
+<html>
+  <script id="vertex-shader" type="x-shader/x-vertex">
+
+    attribute  vec4 vPosition;
+    attribute  vec4 vColor;
+    varying vec4 fColor;
+    uniform mat4 modelView;
+
+    vec4 color(float xLocation, float yLocation)
+      {
+        vec4 setColor = fColor;
+        if(xLocation > 0.85 || xLocation < -0.85)
+        {
+           setColor = vec4(1.0,1.0,1.0,1.0);
+        }
+        if(yLocation > 0.85 || yLocation < -0.85 )
+        {
+           setColor = vec4(1.0,1.0,1.0,1.0);
+        }
+        return setColor;
+      }
+
+
+    void main()
+    {
+        gl_Position = modelView * vPosition;
+        fColor = vColor + color(gl_Position.x,gl_Position.y);
+
+    }
+  </script>
+
+  <script id="fragment-shader" type="x-shader/x-fragment">
+
+    precision mediump float;
+
+    varying vec4 fColor;
+
+    void
+    main()
+    {
+        gl_FragColor = fColor;
+    }
+  </script>
+
+  <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+  <script type="text/javascript" src="../Common/initShaders.js"></script>
+  <script type="text/javascript" src="../Common/MV.js"></script>
+  <script type="text/javascript" src="Spawn.js"></script>
+
+  <body>
+    <canvas
+      id="gl-canvas"
+      width="512"
+      height="512"
+      style="border: 2px solid #000000"
+    >
+      Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+    <h2> Click the center cube to start/stop animation  </h2>
+    
+    <div>
+      scale: 10%
+      <input id="slider" type="range" min="10" max="100" step="10" value="20" />
+      100%<br />
+      Scale the spawned instances relative to the size of the center cube.<br />
+      <br />
+      
+    </div>
+
+    <div>
+      speed: 10%
+      <input
+        id="slider2"
+        type="range"
+        min="10"
+        max="100"
+        step="10"
+        value="50"
+      />
+      100%<br />
+      Change the speed of the spawned instances <br />
+      
+    </div>
+
+    <br />
+     Name: Ritesh Thapa <br />
+     Description: Program that allows user to spawn cube instances from a center cube <br />
+      </br>
+  </body>
+</html>
